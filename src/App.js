@@ -1,26 +1,72 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Container, CssBaseline } from '@material-ui/core';
 
-function App() {
+import Cart from './pages/Cart';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import PizzaStep from './pages/PizzaStep';
+import Welcome from './pages/Welcome';
+
+const routes = [
+  {
+    component: Cart,
+    exact: true,
+    key: 'cart',
+    path: '/cart',
+  },
+  {
+    component: () => <PizzaStep step="crust" />,
+    exact: true,
+    key: 'crust',
+    path: '/pizza/crust',
+  },
+  {
+    component: () => <PizzaStep step="size" />,
+    exact: true,
+    key: 'size',
+    path: '/pizza/size',
+  },
+  {
+    component: () => <PizzaStep step="toppings" />,
+    exact: true,
+    key: 'toppings',
+    path: '/pizza/toppings',
+  },
+  {
+    component: Welcome,
+    exact: true,
+    key: 'welcome',
+    path: '/welcome',
+  },
+  {
+    component: () => <Redirect to="/welcome" />,
+    exact: false,
+    key: 'root',
+    path: '/',
+  },
+];
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <CssBaseline />
+      <Header />
+      <Container maxWidth="sm">
+        <Switch>
+          {routes.map((route) => (
+            <Route
+              component={route.component}
+              exact={route.exact}
+              key={route.key}
+              path={route.path}
+            />
+          ))}
+        </Switch>
+      </Container>
+      <Footer />
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
