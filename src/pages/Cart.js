@@ -25,12 +25,13 @@ const Cart = (props) => {
   }, [pizza, history]);
 
   const handleConfirm = () => {
-    if (PizzaService.fazPedido()) {
-      alert('Pedido confirmado');
+    try {
+      const msg = PizzaService.fazPedido(pizza);
+      alert(msg);
       PizzaActions.clearCurrentPizza();
       return history.push('/welcome');
-    } else {
-      alert('Erro ao fazer seu pedido. Tente novamente.');
+    } catch (error) {
+      alert(error.message);
     }
   };
 
@@ -41,7 +42,7 @@ const Cart = (props) => {
         <Box p={2}>
           <Typography variant="body1" paragraph>
             <ul className={classes.ul}>
-              <li>{pizza.toppings}</li>
+              <li>{pizza.name ? pizza.name : pizza.toppings}</li>
               <li>{pizza.crust}</li>
               <li>{pizza.size}</li>
               <li>

@@ -13,6 +13,10 @@ const getPizza = () => {
 };
 
 const fazPedido = (pizza) => {
+  if (!pizza) {
+    throw new Error('Erro ao processar pedido.');
+  }
+
   return `Pedido realizado!${
     pizza.doDia ? 'Você recebeu pontos de benefício!' : ''
   }`;
