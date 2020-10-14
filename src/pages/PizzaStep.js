@@ -11,10 +11,10 @@ import {
   Box,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
 import { useHistory } from 'react-router-dom';
 
 import PizzaService from '../services/pizza';
+import PizzaActions from '../actions/pizza';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -51,13 +51,17 @@ const PizzaStep = ({ step = 'crust' }) => {
   };
 
   const handleConfirm = (event) => {
-    debugger;
     event.preventDefault();
 
     if (!value) {
       setHelperText('Por favor, selecione uma opção.');
       setError(true);
+      return;
     }
+    const pizza = PizzaActions.getCurrentPizza();
+    pizza[stepData.currentStep] = value;
+    PizzaActions.setCurrentPizza(pizza);
+    return history.push(stepData.nextStepPath);
   };
 
   return (
@@ -70,7 +74,7 @@ const PizzaStep = ({ step = 'crust' }) => {
             error={error}
             className={classes.formControl}
           >
-            <FormLabel component="legend">Escolha:</FormLabel>
+            <FormLabel component="legend">{stepData.caption}</FormLabel>
             <RadioGroup
               aria-label="op"
               name="op"

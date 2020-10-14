@@ -25,7 +25,7 @@ const Welcome = () => {
             A recomendação de hoje é a <b>{pizza.name}</b>.
           </Typography>
           <Button
-            onClick={() => history.push('/welcome')}
+            onClick={() => history.push('/pizza/crust')}
             variant="contained"
             color="secondary"
             size="large"
@@ -33,10 +33,7 @@ const Welcome = () => {
             Montar
           </Button>{' '}
           <Button
-            onClick={() => {
-              debugger;
-              history.push('/cart');
-            }}
+            onClick={() => history.push('/cart')}
             variant="contained"
             color="primary"
             size="large"

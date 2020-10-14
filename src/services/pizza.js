@@ -7,19 +7,24 @@ const getPizza = () => {
     name: 'Pizza de Calabresa',
     price: 29.9,
     size: 'Grande',
-    topping: 'Muçarela e calabresa',
+    toppings: 'Muçarela e calabresa',
+    doDia: true,
   };
 };
 
 const fazPedido = (pizza) => {
-  return !!pizza;
+  return `Pedido realizado!${
+    pizza.doDia ? 'Você recebeu pontos de benefício!' : ''
+  }`;
 };
 
 const getStepsData = (currentStep) => {
   if (currentStep === 'crust') {
     return {
+      caption: 'Escolha a massa',
       currentStep,
-      nextStep: '/pizza/size',
+      nextStep: 'size',
+      nextStepPath: '/pizza/size',
       previousStep: null,
       options: [
         {
@@ -34,8 +39,10 @@ const getStepsData = (currentStep) => {
     };
   } else if (currentStep === 'size') {
     return {
+      caption: 'Escolha o tamanho',
       currentStep,
-      nextStep: '/pizza/toppings',
+      nextStep: 'toppings',
+      nextStepPath: '/pizza/toppings',
       previousStep: '/pizza/crust',
       options: [
         {
@@ -54,21 +61,23 @@ const getStepsData = (currentStep) => {
     };
   } else if (currentStep === 'toppings') {
     return {
+      caption: 'Escolha o sabor',
       currentStep,
-      nextStep: '/cart',
+      nextStep: 'cart',
+      nextStepPath: '/cart',
       previousStep: '/pizza/size',
       options: [
         {
           label: 'Pizza de Muçarela',
-          value: 'muçarela',
+          value: 'Pizza de Muçarela',
         },
         {
           label: 'Pizza de Calabresa',
-          value: 'calabresa',
+          value: 'Pizza de Calabresa',
         },
         {
           label: 'Pizza de Frango com catupiry',
-          value: 'frango',
+          value: 'Pizza de Frango com catupiry',
         },
       ],
     };

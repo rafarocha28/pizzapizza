@@ -3,6 +3,7 @@ import { Typography, Box, Paper, Button, makeStyles } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
 import PizzaService from '../services/pizza';
+import PizzaActions from '../actions/pizza';
 
 const useStyles = makeStyles(() => ({
   ul: {
@@ -10,22 +11,26 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Cart = ({ pizza }) => {
+const Cart = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const [selectedPizza, setSelectedPizza] = useState({});
+  const [pizza, setPizza] = useState({});
 
   useEffect(() => {
-    if (!pizza) {
-      history.push('/welcome');
+    let p = PizzaActions.getCurrentPizza();
+    if (!p.name) {
+      p = PizzaService.getPizza(); // pediram a pizza do dia
     }
-    setSelectedPizza({ ...pizza });
+    setPizza({ ...p });
   }, [pizza, history]);
 
   const handleConfirm = () => {
     if (PizzaService.fazPedido()) {
       alert('Pedido confirmado');
-      history.push('/welcome');
+      PizzaActions.clearCurrentPizza();
+      return history.push('/welcome');
+    } else {
+      alert('Erro ao fazer seu pedido. Tente novamente.');
     }
   };
 
@@ -36,11 +41,11 @@ const Cart = ({ pizza }) => {
         <Box p={2}>
           <Typography variant="body1" paragraph>
             <ul className={classes.ul}>
-              <li>{selectedPizza.name}</li>
-              <li>{selectedPizza.crust}</li>
-              <li>{selectedPizza.size}</li>
+              <li>{pizza.toppings}</li>
+              <li>{pizza.crust}</li>
+              <li>{pizza.size}</li>
               <li>
-                {selectedPizza.price?.toLocaleString('pt-br', {
+                {pizza.price?.toLocaleString('pt-br', {
                   style: 'currency',
                   currency: 'BRL',
                 })}
@@ -54,7 +59,7 @@ const Cart = ({ pizza }) => {
             size="large"
           >
             Confirmar
-          </Button>{' '}
+          </Button>
         </Box>
       </Paper>
     </>
