@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Typography, Box, Paper, Button } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Typography, Box, Paper, Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
-import PizzaService from '../services/pizza';
+import PizzaService from "../services/pizza";
 
 const Welcome = () => {
   const history = useHistory();
   const [pizza, setPizza] = useState({});
   useEffect(() => {
     setPizza(PizzaService.getPizza());
-  }, [pizza]);
+  }, []);
 
   return (
     <>
@@ -25,15 +25,15 @@ const Welcome = () => {
             A recomendação de hoje é a <b>{pizza.name}</b>.
           </Typography>
           <Button
-            onClick={() => history.push('/pizza/crust')}
+            onClick={() => history.push("/pizza/crust")}
             variant="contained"
             color="secondary"
             size="large"
           >
             Montar
-          </Button>{' '}
+          </Button>{" "}
           <Button
-            onClick={() => history.push('/cart')}
+            onClick={() => history.push("/cart")}
             variant="contained"
             color="primary"
             size="large"

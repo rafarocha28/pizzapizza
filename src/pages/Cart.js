@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Typography, Box, Paper, Button, makeStyles } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Typography, Box, Paper, Button, makeStyles } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
-import PizzaService from '../services/pizza';
-import PizzaActions from '../actions/pizza';
+import PizzaService from "../services/pizza";
+import PizzaActions from "../actions/pizza";
 
 const useStyles = makeStyles(() => ({
   ul: {
-    listStyleType: 'none',
+    listStyleType: "none",
   },
 }));
 
@@ -22,14 +22,14 @@ const Cart = (props) => {
       p = PizzaService.getPizza(); // pediram a pizza do dia
     }
     setPizza({ ...p });
-  }, [pizza, history]);
+  }, []);
 
   const handleConfirm = () => {
     try {
       const msg = PizzaService.fazPedido(pizza);
       alert(msg);
       PizzaActions.clearCurrentPizza();
-      return history.push('/welcome');
+      return history.push("/welcome");
     } catch (error) {
       alert(error.message);
     }
@@ -46,9 +46,9 @@ const Cart = (props) => {
               <li>{pizza.crust}</li>
               <li>{pizza.size}</li>
               <li>
-                {pizza.price?.toLocaleString('pt-br', {
-                  style: 'currency',
-                  currency: 'BRL',
+                {pizza.price?.toLocaleString("pt-br", {
+                  style: "currency",
+                  currency: "BRL",
                 })}
               </li>
             </ul>
